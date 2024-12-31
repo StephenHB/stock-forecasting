@@ -1,0 +1,27 @@
+#  Template python-build
+
+#  This template allows you to validate your python code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: python:3.7
+
+pipelines:
+  pull-requests:
+    '**':
+      - step:
+          name: Linting
+          caches:
+              - pip
+          script:
+            - pip install pylint
+            - pip install lint_diffs
+            - git diff -U0 origin/develop | lint-diffs
+    develop:
+      - step:
+          name: Linting
+          caches:
+              - pip
+          script:
+            - pip install pylint
+            - pip install lint_diffs
+            - git diff -U0 origin/develop | lint-diffs
